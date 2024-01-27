@@ -8,7 +8,9 @@ provider:
         role:
             statements:
                 - Effect: Allow
-                  Action: s3:*
+                  Action:
+                      - s3:*
+                      - dynamodb:*
                   Resource: "*"
 
 functions:
