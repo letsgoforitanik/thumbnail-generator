@@ -38,13 +38,13 @@ async function getMetadata(bucket, key) {
 
 async function saveToTable({ dynamoTable, ...params }) {
     const dynamoClient = new AWS.DynamoDB.DocumentClient();
-    return await dynamoClient.put({ TableName: params.dynamoTable, Item: params }).promise();
+    return await dynamoClient.put({ TableName: dynamoTable, Item: params }).promise();
 }
 
 async function generateThumbnail(event, context) {
 
     try {
-        for (let record of event.records) {
+        for (let record of event.Records) {
             const bucketName = record.s3.bucket.name;
             const fileName = record.s3.object.key;
 
