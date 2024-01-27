@@ -1,0 +1,22 @@
+service: thumbnail-generator
+
+provider:
+    name: aws
+    region: ap-south-1
+    runtime: nodejs20.x
+    iam:
+        role:
+            statements:
+                - Effect: Allow
+                  Action: s3:*
+                  Resource: "*"
+
+functions:
+    generate-thumbnail:
+        handler: generate-thumbnail.handler
+        layers:
+            - arn:aws:lambda:ap-south-1:297436977708:layer:thumbnail-generator-layer:3
+
+package:
+    exclude:
+        - node_modules/**
