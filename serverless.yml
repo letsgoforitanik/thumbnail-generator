@@ -12,12 +12,26 @@ provider:
                       - s3:*
                       - dynamodb:*
                   Resource: "*"
+    layers:
+        - arn:aws:lambda:ap-south-1:297436977708:layer:thumbnail-generator-layer:3
 
 functions:
     generate-thumbnail:
         handler: generate-thumbnail.handler
-        layers:
-            - arn:aws:lambda:ap-south-1:297436977708:layer:thumbnail-generator-layer:3
+
+    get-image-metadata:
+        handler: get-metadata.getImagesMetadata
+        events:
+            - httpApi:
+                  method: GET
+                  path: /image-metadata/all
+
+    get-image-metadata-by-id:
+        handler: get-metadata.getImageMetadataById
+        events:
+            - httpApi:
+                  method: GET
+                  path: /image-metadata/{id}
 
 package:
     exclude:
